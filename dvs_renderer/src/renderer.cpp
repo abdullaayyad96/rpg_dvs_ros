@@ -48,6 +48,7 @@ Renderer::~Renderer()
 void Renderer::cameraInfoCallback(const sensor_msgs::CameraInfo::ConstPtr& msg)
 {
   got_camera_info_ = true;
+  std::cout << "got camera info" << std::endl;
 
   camera_matrix_ = cv::Mat(3, 3, CV_64F);
   for (int i = 0; i < 3; i++)
@@ -185,6 +186,11 @@ void Renderer::eventsCallback(const dvs_msgs::EventArray::ConstPtr& msg)
     }
 
     image_pub_.publish(cv_image.toImageMsg());
+
+    std::cout << "camera info: " << got_camera_info_ << std::endl;
+    std::cout << undistorted_image_pub_.getNumSubscribers() << std::endl;
+
+    cv_bridge::CvImage cv_image2;
 
     if (got_camera_info_ && undistorted_image_pub_.getNumSubscribers() > 0)
     {

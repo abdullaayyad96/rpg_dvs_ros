@@ -9,6 +9,7 @@ namespace dvs_renderer
 
 void DvsRendererNodelet::onInit()
 {
+  ROS_INFO("here");
   renderer = new dvs_renderer::Renderer(getNodeHandle(), getPrivateNodeHandle());
   NODELET_INFO_STREAM("Initialized " <<  getName() << " nodelet.");
 }
