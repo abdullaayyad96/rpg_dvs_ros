@@ -1,2 +1,6 @@
 .idea
 cmake-build-debug/
+*.yaml
+*.h5
+*.png
+*.pickle
