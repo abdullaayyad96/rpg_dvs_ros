@@ -1,26 +1,63 @@
 <launch>
-  <rosparam command="load" file="$(find davis_ros_driver)/config/miniDAVIS346.yaml" />
 
   <!-- camera driver -->
   <node name="davis_ros_driver" pkg="davis_ros_driver" type="davis_ros_driver" />
 
+  <!-- event distributer-->
+  <!-- <node name="event_divider" pkg="dvs_renderer" type="rgb_events.py" /> -->
+
   <!-- visualization -->
   <node name="dvs_renderer" pkg="dvs_renderer" type="dvs_renderer">
     <param name="display_method" value="red-blue"/>
-    <!-- <param name="display_method" value="grayscale"/> -->
-    <param name="color" value="true"/>
-    <param name="image_display" value="color"/>
     <remap from="events" to="/dvs/events" />
     <remap from="image" to="/dvs/image_raw" />
     <remap from="camera_info" to="/dvs/camera_info" />
   </node>
+
+  <!-- visualization green 1-->
+  <!-- <node name="dvs_renderer_green_1" pkg="dvs_renderer" type="dvs_renderer">
+    <param name="display_method" value="red-blue"/>
+    <remap from="events" to="/green_events_1" />
+    <remap from="camera_info" to="/dvs/camera_info" />
+    <remap from="dvs_rendering" to="dvs_rendering_green_1"/>
+  </node> -->
+
+  <!-- visualization green 2-->
+  <!-- <node name="dvs_renderer_green_2" pkg="dvs_renderer" type="dvs_renderer">
+    <param name="display_method" value="red-blue"/>
+    <remap from="events" to="/green_events_2" />
+    <remap from="camera_info" to="/dvs/camera_info" />
+    <remap from="dvs_rendering" to="dvs_rendering_green_2"/>
+  </node> -->
+
+  <!-- visualization red-->
+  <!-- <node name="dvs_renderer_red" pkg="dvs_renderer" type="dvs_renderer">
+    <param name="display_method" value="red-blue"/>
+    <remap from="events" to="/red_events" />
+    <remap from="camera_info" to="/dvs/camera_info" />
+    <remap from="dvs_rendering" to="dvs_rendering_red"/>
+  </node> -->
+
+  <!-- visualization blue-->
+  <!-- <node name="dvs_renderer_blue" pkg="dvs_renderer" type="dvs_renderer">
+    <param name="display_method" value="red-blue"/>
+    <remap from="events" to="/blue_events" />
+    <remap from="camera_info" to="/dvs/camera_info" />
+    <remap from="dvs_rendering" to="dvs_rendering_blue"/>
+  </node> -->
 
   <!-- display -->
   <node name="rqt_image_view" pkg="rqt_image_view" type="rqt_image_view">
   	<remap from="image" to="dvs_rendering"/>
   </node>
 
+  <!-- display -->
+  <!--<node name="rqt_gui_corners" pkg="rqt_gui" type="rqt_gui" args=" --> <!-- - -perspective-file $(find dvs_renderer)/cfg/soft_exp.perspective" />  -->
+
   <!-- configure -->
-  <!-- <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" /> -->
+  <node name="rqt_reconfigure" pkg="rqt_reconfigure" type="rqt_reconfigure" />
+
+  <rosparam command="load" file="$(find davis_ros_driver)/config/ARIC_machining_exp.yaml" />
+  <!-- <rosparam command="load" file="$(find davis_ros_driver)/config/yusra_denoising_exp.yaml" /> -->
 
 </launch>
